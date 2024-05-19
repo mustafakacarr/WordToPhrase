@@ -1,0 +1,15 @@
+spring:
+  datasource:
+      url: jdbc:postgresql://localhost:9812/${DB_TABLE}
+      username: ${DB_USER}
+      password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+  application:
+    name: WordToPhrase
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 2MB
+      max-request-size: 2MB
