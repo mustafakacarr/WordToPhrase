@@ -14,17 +14,12 @@ public class ResultEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-
-    @ElementCollection
-    @CollectionTable(name = "word_to_score", joinColumns = @JoinColumn(name = "result_id"))
-    private HashMap<WordEntity, Integer> wordToScore;
-
-    /*It means how many words user entirely learned
-    So It's like that how many word that will not get asked them again because of learned */
-    private int learnedWordCount;
-
-    //its total percent of wordToScore
-    private int totalScore;
+    private int correctCount;
+    private int wrongCount;
 
     private long resultDatetime;
+
+    @OneToOne
+    @JoinColumn(name = "exam_id")
+    private ExamEntity exam;
 }

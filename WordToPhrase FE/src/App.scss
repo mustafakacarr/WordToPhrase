@@ -1,0 +1,30 @@
+@import 'bootstrap/scss/bootstrap';
+$teal-color: #009688;
+
+.text-teal {
+  color: $teal-color !important;
+}
+.bg-teal{
+  background-color: $teal-color !important;
+}
+
+.btn-teal{
+    background-color: $teal-color !important;
+    color: $white !important;
+}
+.btn-outline-teal{
+      color: $teal-color !important;
+      border:$teal-color solid !important;
+}
+.btn-outline-teal:hover{
+      background-color: $teal-color !important;
+     color:white !important;
+}
+
+.answerCard.active {
+  border: 2px solid $primary !important;
+  background-color: #e9ecef;
+}
+.answerCard:hover{
+  border: 2px solid $primary !important;
+}

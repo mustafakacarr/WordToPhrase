@@ -14,4 +14,6 @@ public interface WordRepository extends JpaRepository<WordEntity, Long> {
 
     @Query(value = "SELECT * FROM words ORDER BY RANDOM () LIMIT :limitSize", nativeQuery = true)
     List<WordEntity> findWithLimit(@Param("limitSize") int count);
+
+    List<WordEntity> findByWordOwnerId(long userId);
 }

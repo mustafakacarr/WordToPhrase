@@ -14,4 +14,9 @@ public class UserEntity {
     private String username;
     private String password;
     private String email;
+
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "setting_id")
+    private SettingEntity setting;
 }

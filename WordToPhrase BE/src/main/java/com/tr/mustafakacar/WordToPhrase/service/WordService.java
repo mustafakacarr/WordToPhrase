@@ -1,12 +1,12 @@
 package com.tr.mustafakacar.WordToPhrase.service;
 
-import com.tr.mustafakacar.WordToPhrase.entity.ImageEntity;
 import com.tr.mustafakacar.WordToPhrase.entity.UserEntity;
 import com.tr.mustafakacar.WordToPhrase.entity.WordEntity;
 import com.tr.mustafakacar.WordToPhrase.repository.UserRepository;
 import com.tr.mustafakacar.WordToPhrase.repository.WordRepository;
 import com.tr.mustafakacar.WordToPhrase.requests.WordCreateRequest;
 import com.tr.mustafakacar.WordToPhrase.responses.QuestionResponse;
+import com.tr.mustafakacar.WordToPhrase.responses.WordResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,6 +15,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+
 
 @Service
 public class WordService {
@@ -28,7 +30,7 @@ public class WordService {
         this.imageService = imageService;
     }
 
-    public WordEntity addWord(MultipartFile file, WordCreateRequest wordCreateRequest) throws IOException {
+    public WordResponse addWord(MultipartFile file, WordCreateRequest wordCreateRequest) throws IOException {
         // ImageEntity image = imageService.saveImage(file);
         UserEntity user = userRepository.findById(wordCreateRequest.getOwnerId()).orElseThrow(() -> new RuntimeException("User not found"));
         WordEntity wordEntity = new WordEntity();
@@ -37,7 +39,7 @@ public class WordService {
         wordEntity.setPhrases(wordCreateRequest.getPhrases());
         wordEntity.setWordOwner(user);
         wordEntity.setImage(null);
-        return wordRepository.save(wordEntity);
+        return new WordResponse(wordRepository.save(wordEntity));
     }
 
     public List<WordEntity> getNewWordsForExam(Optional<List<WordEntity>> excludedWords, int count) {
@@ -69,5 +71,9 @@ public class WordService {
 
     public List<QuestionResponse> getQuestionListByWords(List<WordEntity> words) {
         return words.stream().map(this::getQuestionByWord).collect(Collectors.toList());
+    }
+
+    public List<WordResponse> getAllWords(long userId) {
+        return wordRepository.findByWordOwnerId(userId).stream().map((word)->new WordResponse(word)).collect(Collectors.toList());
     }
 }

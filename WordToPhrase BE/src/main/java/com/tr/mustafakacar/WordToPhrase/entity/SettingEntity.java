@@ -2,6 +2,7 @@ package com.tr.mustafakacar.WordToPhrase.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.security.core.userdetails.User;
 
 @Table(name = "settings")
 @Data
@@ -12,10 +13,10 @@ public class SettingEntity {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
 
-    private int newWordFrequency=10;
+    private int newWordFrequency;
+
+    @OneToOne(fetch = FetchType.LAZY,mappedBy = "setting")
+    private UserEntity user;
 
 }
