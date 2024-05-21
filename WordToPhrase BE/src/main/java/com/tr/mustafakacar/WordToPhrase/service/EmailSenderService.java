@@ -28,7 +28,7 @@ public class EmailSenderService {
             helper.setFrom(from, "Mustafa KAÇAR");
             helper.setTo(receiver);
 
-            helper.setSubject("CallTracker Information Alert!");
+            helper.setSubject("WordToPhrase Forgot Password!");
             helper.setText(content, true);
 
             mailSender.send(message);

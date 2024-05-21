@@ -8,9 +8,8 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-const history=useNavigate();
-    const handleSubmit = async () => {
-
+  const history = useNavigate();
+  const handleSubmit = async () => {
     try {
       const response = await postWithoutAuth("/api/auth/signup", {
         email,
@@ -26,7 +25,9 @@ const history=useNavigate();
       setTimeout(() => {
         history("/home");
       }, 1000);
-    } catch (error) {console.error("Error registering:", error);}
+    } catch (error) {
+      console.error("Error registering:", error);
+    }
   };
 
   return (
