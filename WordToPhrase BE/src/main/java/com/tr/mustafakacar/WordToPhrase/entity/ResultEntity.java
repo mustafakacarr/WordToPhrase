@@ -22,4 +22,8 @@ public class ResultEntity {
     @OneToOne
     @JoinColumn(name = "exam_id")
     private ExamEntity exam;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 }

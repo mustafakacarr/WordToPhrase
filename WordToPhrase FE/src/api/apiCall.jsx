@@ -23,3 +23,10 @@ export const postWithAuth = async (url, body) => {
 export const postWithoutAuth = async (url, body) => {
   return await axios.post(url, body);
 };
+export const postWithoutAuthAsMultipart = async (url, body) => {
+  return await axios.post(url, body, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+}

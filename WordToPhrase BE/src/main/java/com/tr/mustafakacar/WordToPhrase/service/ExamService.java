@@ -81,8 +81,11 @@ public class ExamService {
         List<WordEntity> newUnknownWords = new ArrayList<>();
         for (WordEntity word : wordsInExam) {
             String answer = examAnswers.get(word.getId());
-            if (answer.equals(word.getMeaning())) {
-                newKnownWords.add(word);
+            if (answer != null) {
+                if (answer.equals(word.getMeaning()))
+                    newKnownWords.add(word);
+                else
+                    newUnknownWords.add(word);
             } else {
                 newUnknownWords.add(word);
             }
@@ -97,6 +100,7 @@ public class ExamService {
         resultEntity.setWrongCount(newUnknownWords.size());
         resultEntity.setResultDatetime(DateActions.getNowAsMilliseconds());
         resultEntity.setExam(exam);
+        resultEntity.setUser(exam.getUser());
         return new ResultResponse(resultRepository.save(resultEntity));
 
     }

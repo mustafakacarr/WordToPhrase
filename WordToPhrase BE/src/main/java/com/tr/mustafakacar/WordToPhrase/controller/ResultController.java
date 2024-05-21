@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/results")
 public class ResultController {
@@ -20,5 +22,9 @@ public class ResultController {
     @GetMapping("/{resultId}")
     public ResultResponse getResult(@PathVariable long resultId) {
         return resultService.getResult(resultId);
+    }
+    @GetMapping("/users/{userId}")
+    public List<ResultResponse> getResults(@PathVariable long userId) {
+        return resultService.getResults(userId);
     }
 }

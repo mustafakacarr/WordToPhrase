@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { getWithoutAuth, postWithoutAuth } from "../api/apiCall";
+import { getWithoutAuth, postWithoutAuth, postWithoutAuthAsMultipart } from "../api/apiCall";
+import axios from "axios";
 const NewWordForm = () => {
   const tempUserId = 1;
   const [word, setWord] = useState("");
   const [meaning, setMeaning] = useState("");
   const [sentences, setSentences] = useState([""]);
+  const [selectedImage, setSelectedImage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const handleSentenceChange = (index, value) => {
     const newSentences = [...sentences];
@@ -25,15 +27,24 @@ const NewWordForm = () => {
       throw new Error("Word, meaning and sentences are required!");
     }
     try {
-      const response = await postWithoutAuth("/api/words", {
+      const data = new FormData();
+      data.append("word", JSON.stringify({
         word,
         meaning,
         phrases: sentences,
         ownerId: tempUserId,
-      });
+      }));
+      data.append("image", selectedImage);
+
+   const response = await axios.post("/api/words", data, {
+     headers: {
+       "Content-Type": "multipart/form-data",
+     },
+   });
       setSentences([""]);
       setWord("");
       setMeaning("");
+      
 
       setIsSuccess(true);
       setTimeout(() => {
@@ -42,7 +53,10 @@ const NewWordForm = () => {
     } catch (error) {
       console.error("Error adding word:", error);
     }
-
+  };
+  const handleFileChange = (e) => {
+    if (e.target.files && e.target.files[0])
+      setSelectedImage(e.target.files[0]);
   };
 
   return (
@@ -55,7 +69,12 @@ const NewWordForm = () => {
           Image
         </label>
         <div className="col-sm-10">
-          <input type="file" className="form-control" id="imageUpload" />
+          <input
+            type="file"
+            className="form-control"
+            id="imageUpload"
+            onChange={(e) => handleFileChange(e)}
+          />
         </div>
       </div>
       <div className="row mb-3">

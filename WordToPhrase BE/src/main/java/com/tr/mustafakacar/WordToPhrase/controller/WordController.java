@@ -1,9 +1,11 @@
 package com.tr.mustafakacar.WordToPhrase.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tr.mustafakacar.WordToPhrase.requests.WordCreateRequest;
 import com.tr.mustafakacar.WordToPhrase.responses.WordResponse;
 import com.tr.mustafakacar.WordToPhrase.service.WordService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,9 +19,12 @@ private final WordService wordService;
         this.wordService = wordService;
     }
 
-    @PostMapping
-    public WordResponse addWord(@RequestBody WordCreateRequest wordCreateRequest) throws IOException {
-        return wordService.addWord(null,wordCreateRequest);
+    @PostMapping(consumes = {"multipart/form-data"})
+    public WordResponse addWord(@RequestPart MultipartFile image, @RequestPart("word") String wordJson) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        WordCreateRequest word = objectMapper.readValue(wordJson, WordCreateRequest.class);
+
+        return wordService.addWord(image,word);
     }
 
     @GetMapping

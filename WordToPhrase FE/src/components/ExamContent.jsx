@@ -1,11 +1,14 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Question from "./Question";
 import { postWithoutAuth } from "../api/apiCall";
 
 const ExamContent = (props) => {
   const [userAnswers, setUserAnswers] = useState([]);
   const { questions, examId } = props.exam;
-const history=useNavigate();
+  const navigate = useNavigate();
+  const [message, setMessage] = useState("");
+
   const handleFinishExam = async () => {
     try {
       const response = await postWithoutAuth(
@@ -13,12 +16,17 @@ const history=useNavigate();
         formatAnswers(userAnswers)
       );
       console.log("Exam finished!");
-        console.log("User answers:", userAnswers);
-        history(`/results/${response.data.resultId}`)
+      console.log("User answers:", userAnswers);
+      setMessage("Exam finished! Redirecting to results...");
+      setTimeout(() => {
+        navigate(`/results/${response.data.resultId}`);
+      }, 2000);
     } catch (error) {
+      setMessage("Error finishing exam. Please try again later.");
       console.error("Error finishing exam:", error);
     }
   };
+
   const formatAnswers = (answers) => {
     const formatted = { answers: {} };
     answers.forEach((answer) => {
@@ -26,6 +34,7 @@ const history=useNavigate();
     });
     return formatted;
   };
+
   const handleAnswer = (wordId, answer) => {
     const newAnswers = [...userAnswers];
     const existingAnswerIndex = newAnswers.findIndex(
@@ -41,20 +50,26 @@ const history=useNavigate();
 
   return (
     <div>
-      {questions.map((question, index) => (
-        <Question
-          key={index}
-          order={index}
-          data={question}
-          onAnswer={handleAnswer}
-        />
-      ))}{" "}
-      <div
-        className="btn btn-primary row justify-content-center m-auto"
-        onClick={handleFinishExam}
-      >
-        Finish Exam
-      </div>
+      {!message ? (
+        <>
+          {questions.map((question, index) => (
+            <Question
+              key={index}
+              order={index}
+              data={question}
+              onAnswer={handleAnswer}
+            />
+          ))}
+          <div
+            className="btn btn-primary row justify-content-center m-auto"
+            onClick={handleFinishExam}
+          >
+            Finish Exam
+          </div>
+        </>
+      ) : (
+        <div>{message}</div>
+      )}
     </div>
   );
 };

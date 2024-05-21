@@ -10,6 +10,7 @@ import Results from "./pages/Results";
 import Settings from "./pages/Settings";
 import React from "react";
 import ResultSingle from "./pages/ResultSingle";
+import ForgotPassword from "./pages/ForgotPassword";
 function App() {
   return (
     <>
@@ -19,6 +20,7 @@ function App() {
           <Route path="/words" element={<Words />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/exam" element={<Exam />} />
           <Route path="/results" element={<Results />} />
           <Route path="/results/:resultId" element={<ResultSingle />} />

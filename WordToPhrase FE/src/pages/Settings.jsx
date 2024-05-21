@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BaseLayout from "../layout/BaseLayout";
 
 const Settings = () => {
   const [frequency, setFrequency] = useState(10);
+
+  
 
   
   return (

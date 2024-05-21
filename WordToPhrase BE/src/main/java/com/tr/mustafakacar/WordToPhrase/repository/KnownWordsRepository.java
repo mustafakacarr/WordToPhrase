@@ -14,8 +14,8 @@ import java.util.List;
 public interface KnownWordsRepository extends JpaRepository<KnownWordEntity, Long> {
     List<KnownWordEntity> findByUserId(long userId);
 
-    @Query(value = "SELECT * FROM known_words WHERE next_to_ask_date == :todayAsMilliseconds AND correct_count<6", nativeQuery = true)
-    List<KnownWordEntity> findByNextToAskDate(long todayAsMilliseconds);
+    @Query(value = "SELECT * FROM known_words WHERE next_to_ask_date = :todayAsMilliseconds AND correct_count < 6", nativeQuery = true)
+    List<KnownWordEntity> findByNextToAskDate(@Param("todayAsMilliseconds") long todayAsMilliseconds);
 
     KnownWordEntity findByUserIdAndWordId(long userId, Long wordId);
 

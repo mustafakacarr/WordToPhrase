@@ -1,5 +1,6 @@
 package com.tr.mustafakacar.WordToPhrase.service;
 
+import com.tr.mustafakacar.WordToPhrase.entity.ImageEntity;
 import com.tr.mustafakacar.WordToPhrase.entity.UserEntity;
 import com.tr.mustafakacar.WordToPhrase.entity.WordEntity;
 import com.tr.mustafakacar.WordToPhrase.repository.UserRepository;
@@ -17,7 +18,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 
-
 @Service
 public class WordService {
     private final WordRepository wordRepository;
@@ -31,14 +31,14 @@ public class WordService {
     }
 
     public WordResponse addWord(MultipartFile file, WordCreateRequest wordCreateRequest) throws IOException {
-        // ImageEntity image = imageService.saveImage(file);
+        ImageEntity image = imageService.saveImage(file);
         UserEntity user = userRepository.findById(wordCreateRequest.getOwnerId()).orElseThrow(() -> new RuntimeException("User not found"));
         WordEntity wordEntity = new WordEntity();
         wordEntity.setMeaning(wordCreateRequest.getMeaning());
         wordEntity.setWord(wordCreateRequest.getWord());
         wordEntity.setPhrases(wordCreateRequest.getPhrases());
         wordEntity.setWordOwner(user);
-        wordEntity.setImage(null);
+        wordEntity.setImage(image);
         return new WordResponse(wordRepository.save(wordEntity));
     }
 
@@ -74,6 +74,6 @@ public class WordService {
     }
 
     public List<WordResponse> getAllWords(long userId) {
-        return wordRepository.findByWordOwnerId(userId).stream().map((word)->new WordResponse(word)).collect(Collectors.toList());
+        return wordRepository.findByWordOwnerId(userId).stream().map((word) -> new WordResponse(word)).collect(Collectors.toList());
     }
 }
