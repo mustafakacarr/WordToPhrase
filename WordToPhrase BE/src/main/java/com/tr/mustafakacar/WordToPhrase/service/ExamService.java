@@ -56,10 +56,10 @@ public class ExamService {
             wordsToAsk.addAll(knownWordsToAskToday.stream().map(knownWord -> knownWord.getWord()).collect(Collectors.toList()));
 
             List<WordEntity> exceptionWords = knownWords.stream().map(KnownWordEntity::getWord).collect(Collectors.toList());
-            List<WordEntity> newWordsToAsk = wordService.getNewWordsForExam(Optional.of(exceptionWords), setting.getNewWordFrequency());
+            List<WordEntity> newWordsToAsk = wordService.getNewWordsForExam(Optional.of(exceptionWords), setting.getNewWordFrequency(),user);
             wordsToAsk.addAll(newWordsToAsk);
         } else {
-            List<WordEntity> newWordsToAsk = wordService.getNewWordsForExam(Optional.empty(), setting.getNewWordFrequency());
+            List<WordEntity> newWordsToAsk = wordService.getNewWordsForExam(Optional.empty(), setting.getNewWordFrequency(),user);
             wordsToAsk.addAll(newWordsToAsk);
         }
 

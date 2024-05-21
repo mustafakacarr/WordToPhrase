@@ -14,30 +14,13 @@ const Exam = () => {
       const response = await postWithoutAuth("/api/exams/users/" + user.id);
       if (response.data.questions.length > 0)
         console.log("Exam created successfully!");
-      setExamStarted(true);
-      setExam(response.data);
+        setExamStarted(true);
+        setExam(response.data);
     } catch (error) {
       console.error("Error creating new exam:", error);
     }
   };
 
-  const questionList = [
-    {
-      image: "https://via.placeholder.com/150",
-      word: "What is the capital of France?",
-      options: ["New York", "London", "Paris", "Dublin"],
-    },
-    {
-      image: "https://via.placeholder.com/150",
-      word: "What is the capital of Ireland?",
-      options: ["New York", "London", "Paris", "Dublin"],
-    },
-    {
-      image: "https://via.placeholder.com/150",
-      word: "What is the capital of England?",
-      options: ["New York", "London", "Paris", "Dublin"],
-    },
-  ];
   return (
     <BaseLayout>
       {!examStarted && (

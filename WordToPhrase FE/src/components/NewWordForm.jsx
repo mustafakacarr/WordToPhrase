@@ -55,7 +55,8 @@ const NewWordForm = () => {
       setIsSuccess(true);
       setTimeout(() => {
         setIsSuccess(false);
-      }, 3000);
+        window.location.reload();
+      }, 2000);
     } catch (error) {
       console.error("Error adding word:", error);
     }

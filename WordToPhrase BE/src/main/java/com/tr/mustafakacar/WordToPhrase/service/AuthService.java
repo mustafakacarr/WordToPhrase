@@ -30,7 +30,7 @@ public class AuthService {
     }
 
     public AuthResponse login(AuthRequest authRequest) {
-        return new AuthResponse(userRepository.findByUsernameAndPassword(authRequest.getUsername(), authRequest.getPassword()).orElse(null));
+        return new AuthResponse(userRepository.findByUsernameAndPassword(authRequest.getUsername(), authRequest.getPassword()).orElseThrow(()-> new RuntimeException("User not found")));
     }
 
     public void forgotPassword(String email) throws MessagingException, UnsupportedEncodingException {

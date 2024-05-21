@@ -51,27 +51,30 @@ const ExamContent = (props) => {
   return (
     <div>
       {!message ? (
-        <>
-          {questions.map((question, index) => (
-            <Question
-              key={index}
-              order={index}
-              data={question}
-              onAnswer={handleAnswer}
-            />
-          ))}
-          <div
-            className="btn btn-primary row justify-content-center m-auto"
-            onClick={handleFinishExam}
-          >
-            Finish Exam
-          </div>
-        </>
+        questions.length > 0 ? (
+          <>
+            {questions.map((question, index) => (
+              <Question
+                key={index}
+                order={index}
+                data={question}
+                onAnswer={handleAnswer}
+              />
+            ))}
+            <div
+              className="btn btn-primary row justify-content-center m-auto"
+              onClick={handleFinishExam}
+            >
+              Finish Exam
+            </div>
+          </>
+        ) : (
+          "There is no word to ask you. You could add new words to practice"
+        )
       ) : (
         <div>{message}</div>
       )}
     </div>
   );
-};
-
+}
 export default ExamContent;

@@ -42,14 +42,14 @@ public class WordService {
         return new WordResponse(wordRepository.save(wordEntity));
     }
 
-    public List<WordEntity> getNewWordsForExam(Optional<List<WordEntity>> excludedWords, int count) {
+    public List<WordEntity> getNewWordsForExam(Optional<List<WordEntity>> excludedWords, int count,UserEntity user) {
         List<WordEntity> exceptOf = excludedWords.orElseGet(() -> List.of());
         List<Long> exceptionIds = exceptOf.stream().map(WordEntity::getId).collect(Collectors.toList());
 
         if (exceptionIds.isEmpty())
-            return wordRepository.findWithLimit(count);
+            return wordRepository.findWithLimit(user.getId(), count);
         else
-            return wordRepository.findByIdNotInWithLimit(exceptionIds, count);
+            return wordRepository.findByIdNotInWithLimit(user.getId(),exceptionIds, count);
     }
 
     public QuestionResponse getQuestionByWord(WordEntity mainWord) {
