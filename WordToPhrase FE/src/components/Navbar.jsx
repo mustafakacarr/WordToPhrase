@@ -10,6 +10,11 @@ const Navbar = () => {
     setActiveTab(tab);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    window.location.href = "/login";
+  }
+
   return (
     <div className="mt-3 mx-1 mx-md-3 mx-lg-5">
       <div className="border rounded mx-auto py-1 px-3 position-relative">
@@ -20,7 +25,7 @@ const Navbar = () => {
                 activeTab === "Home" ? "btn-teal" : "btn-dark"
               } rounded px-3 w-100 h-100`}
               onClick={() => handleTabClick("Home")}
-              href="/"
+              href="/home"
             >
               Home
             </a>
@@ -80,15 +85,11 @@ const Navbar = () => {
                 <FontAwesomeIcon icon={faUser} /> Mustafa KAÇAR
               </button>
               <ul className="dropdown-menu">
-                <li className="dropdown-item" style={{userSelect:"none"}}>
-                 
-                  <FontAwesomeIcon icon={faDoorOpen} size="lg"/>  Logout
-                  
+                <li className="dropdown-item" style={{ userSelect: "none" }} onClick={handleLogout}>
+                  <FontAwesomeIcon icon={faDoorOpen} size="lg" /> Logout
                 </li>
               </ul>
             </div>
-
-          
           </li>
         </ul>
       </div>

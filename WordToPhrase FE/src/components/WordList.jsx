@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { getWithoutAuth } from "../api/apiCall";
 
 const WordList = () => {
-  const tempUserId = 1;
+  const user = JSON.parse(localStorage.getItem("user"));
   const [words, setWords] = useState([]);
 
   const fetchWords = async () => {
     try {
       const response = await getWithoutAuth("/api/words", {
-        params: { userId: tempUserId },
+        params: { userId: user.id },
       });
       setWords(response.data);
       console.log("🚀 ~ fetchWords ~ response:", response);

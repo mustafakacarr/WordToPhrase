@@ -5,10 +5,11 @@ import { getWithoutAuth } from "../api/apiCall";
 
 const Results = () => {
   const [resultList, setResultList] = useState([]);
-const tempUserId = 1;
+  const user = JSON.parse(localStorage.getItem("user"));
+
   const fetchData = async () => {
     try {
-      const response = await getWithoutAuth(`/api/results/users/${tempUserId}`);
+      const response = await getWithoutAuth(`/api/results/users/${user.id}`);
       setResultList(response.data);
     } catch (error) {
       console.error("Error fetching results:", error);

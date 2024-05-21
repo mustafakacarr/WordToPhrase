@@ -6,12 +6,12 @@ import axios from "axios";
 import ExamContent from "../components/ExamContent";
 
 const Exam = () => {
-  const [exam, setExam] = useState({}); // [1
+  const [exam, setExam] = useState({}); 
   const [examStarted, setExamStarted] = useState(false);
-  const tempUserId = 1;
+  const user = JSON.parse(localStorage.getItem("user"))
   const handleCreateNewExam = async () => {
     try {
-      const response = await postWithoutAuth("/api/exams/users/" + tempUserId);
+      const response = await postWithoutAuth("/api/exams/users/" + user.id);
       if (response.data.questions.length > 0)
         console.log("Exam created successfully!");
       setExamStarted(true);

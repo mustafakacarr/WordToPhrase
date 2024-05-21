@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { getWithoutAuth, postWithoutAuth, postWithoutAuthAsMultipart } from "../api/apiCall";
+import {
+  getWithoutAuth,
+  postWithoutAuth,
+  postWithoutAuthAsMultipart,
+} from "../api/apiCall";
 import axios from "axios";
 const NewWordForm = () => {
-  const tempUserId = 1;
+  const user = JSON.parse(localStorage.getItem("user"));
   const [word, setWord] = useState("");
   const [meaning, setMeaning] = useState("");
   const [sentences, setSentences] = useState([""]);
@@ -28,23 +32,25 @@ const NewWordForm = () => {
     }
     try {
       const data = new FormData();
-      data.append("word", JSON.stringify({
-        word,
-        meaning,
-        phrases: sentences,
-        ownerId: tempUserId,
-      }));
+      data.append(
+        "word",
+        JSON.stringify({
+          word,
+          meaning,
+          phrases: sentences,
+          ownerId: user.id,
+        })
+      );
       data.append("image", selectedImage);
 
-   const response = await axios.post("/api/words", data, {
-     headers: {
-       "Content-Type": "multipart/form-data",
-     },
-   });
+      const response = await axios.post("/api/words", data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       setSentences([""]);
       setWord("");
       setMeaning("");
-      
 
       setIsSuccess(true);
       setTimeout(() => {
