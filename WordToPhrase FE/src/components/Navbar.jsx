@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 
 const Navbar = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
   const [activeTab, setActiveTab] = useState("Home");
 
   const handleTabClick = (tab) => {
@@ -13,7 +14,7 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem("user");
     window.location.href = "/login";
-  }
+  };
 
   return (
     <div className="mt-3 mx-1 mx-md-3 mx-lg-5">
@@ -82,10 +83,14 @@ const Navbar = () => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                <FontAwesomeIcon icon={faUser} /> Mustafa KAÇAR
+                <FontAwesomeIcon icon={faUser} />{user.username}
               </button>
               <ul className="dropdown-menu">
-                <li className="dropdown-item" style={{ userSelect: "none" }} onClick={handleLogout}>
+                <li
+                  className="dropdown-item"
+                  style={{ userSelect: "none" }}
+                  onClick={handleLogout}
+                >
                   <FontAwesomeIcon icon={faDoorOpen} size="lg" /> Logout
                 </li>
               </ul>

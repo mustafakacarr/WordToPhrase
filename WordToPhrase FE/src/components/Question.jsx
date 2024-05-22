@@ -6,7 +6,7 @@ const Question = (props) => {
   const [activeAnswer, setActiveAnswer] = useState(null); 
   const wordItem = {
     word: data.word,
-    img: data.image,
+    image: data.image,
   };
   const answerList = data.options;
   const handleClick = (answerItem) => () => {
@@ -27,7 +27,7 @@ const Question = (props) => {
                 <h5 className="card-title">{wordItem.word}</h5>
               </div>
               <img
-                src={wordItem.img}
+                src={`data:${wordItem.image.type};base64,${wordItem.image.file}`}
                 alt={wordItem.word}
                 className="img-thumbnail"
                 style={{ width: "80px", height: "80px", objectFit: "cover" }}
@@ -38,7 +38,6 @@ const Question = (props) => {
         <div className="mt-2 mb-5">
           {answerList.map((answerItem) => (
             <Answer
-         
               data={answerItem}
               handleClick={handleClick(answerItem)}
               isActive={answerItem == activeAnswer}

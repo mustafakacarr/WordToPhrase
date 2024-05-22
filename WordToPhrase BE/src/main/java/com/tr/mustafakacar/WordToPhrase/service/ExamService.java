@@ -40,7 +40,7 @@ public class ExamService {
         this.knownWordsService = knownWordsService1;
     }
 
-
+    @Transactional
     public ExamResponse startExam(long userId) {
         LocalDate today = LocalDate.now();
         long startOfTodayAsMilliseconds = today.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli();
@@ -56,10 +56,10 @@ public class ExamService {
             wordsToAsk.addAll(knownWordsToAskToday.stream().map(knownWord -> knownWord.getWord()).collect(Collectors.toList()));
 
             List<WordEntity> exceptionWords = knownWords.stream().map(KnownWordEntity::getWord).collect(Collectors.toList());
-            List<WordEntity> newWordsToAsk = wordService.getNewWordsForExam(Optional.of(exceptionWords), setting.getNewWordFrequency(),user);
+            List<WordEntity> newWordsToAsk = wordService.getNewWordsForExam(Optional.of(exceptionWords), setting.getNewWordFrequency(), user);
             wordsToAsk.addAll(newWordsToAsk);
         } else {
-            List<WordEntity> newWordsToAsk = wordService.getNewWordsForExam(Optional.empty(), setting.getNewWordFrequency(),user);
+            List<WordEntity> newWordsToAsk = wordService.getNewWordsForExam(Optional.empty(), setting.getNewWordFrequency(), user);
             wordsToAsk.addAll(newWordsToAsk);
         }
 

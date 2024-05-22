@@ -8,6 +8,7 @@ import com.tr.mustafakacar.WordToPhrase.repository.WordRepository;
 import com.tr.mustafakacar.WordToPhrase.requests.WordCreateRequest;
 import com.tr.mustafakacar.WordToPhrase.responses.QuestionResponse;
 import com.tr.mustafakacar.WordToPhrase.responses.WordResponse;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -51,7 +52,7 @@ public class WordService {
         else
             return wordRepository.findByIdNotInWithLimit(user.getId(),exceptionIds, count);
     }
-
+@Transactional
     public QuestionResponse getQuestionByWord(WordEntity mainWord) {
 
         List<WordEntity> allWords = wordRepository.findAll();
